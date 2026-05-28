@@ -4,7 +4,7 @@ count = 0
 greeted = []
 
 while True:
-    name = input("What is your name? (or 'quit' to exit, 'list' to see greeted names, 'delete' to remove a name, 'edit' to edit a name, 'search' to find a name) ")
+    name = input("What is your name? (or 'quit' to exit, 'list' to see greeted names, 'delete' to remove a name, 'edit' to edit a name, 'search' to find a name, 'sort' to sort the list) ")
     if name.lower() == "quit":
         with open("greeted_names.txt", "w") as f:
             for entry in greeted:
@@ -41,6 +41,25 @@ while True:
                     print("Invalid number.")
             except ValueError:
                 print("Invalid input.")
+        print()
+        continue
+    if name.lower() == "sort":
+        if not greeted:
+            print("No one has been greeted yet.")
+            print()
+            continue
+        sort_by = input("Sort by 'name' or 'age': ").lower()
+        if sort_by == "name":
+            greeted.sort(key=lambda e: e.split(",")[0].lower())
+        elif sort_by == "age":
+            greeted.sort(key=lambda e: int(e.split("age ")[1].split(" ")[0]))
+        else:
+            print("Invalid option. Use 'name' or 'age'.")
+            print()
+            continue
+        print("\nSorted list:")
+        for entry in greeted:
+            print(f"  - {entry}")
         print()
         continue
     if name.lower() == "search":
