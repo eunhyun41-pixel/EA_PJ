@@ -1,3 +1,5 @@
+import datetime
+
 count = 0
 greeted = []
 
@@ -30,6 +32,7 @@ while True:
         except ValueError:
             print("Invalid age. Please enter a number.")
     count += 1
-    greeted.append(f"{name}, age {age}")
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    greeted.append(f"{name}, age {age} (greeted at {timestamp})")
     print(f"Hello, {name}! You are {age} years old.")
     print()
