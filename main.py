@@ -4,7 +4,7 @@ count = 0
 greeted = []
 
 while True:
-    name = input("What is your name? (or 'quit' to exit, 'list' to see greeted names, 'delete' to remove a name) ")
+    name = input("What is your name? (or 'quit' to exit, 'list' to see greeted names, 'delete' to remove a name, 'edit' to edit a name) ")
     if name.lower() == "quit":
         with open("greeted_names.txt", "w") as f:
             for entry in greeted:
@@ -37,6 +37,39 @@ while True:
                     removed = greeted.pop(index)
                     count -= 1
                     print(f"Removed: {removed}")
+                else:
+                    print("Invalid number.")
+            except ValueError:
+                print("Invalid input.")
+        print()
+        continue
+    if name.lower() == "edit":
+        if not greeted:
+            print("No one has been greeted yet.")
+            print()
+            continue
+        print("\nPeople greeted so far:")
+        for i, entry in enumerate(greeted, 1):
+            print(f"  {i}. {entry}")
+        edit_input = input("Enter the number to edit (or 'cancel'): ")
+        if edit_input.lower() != "cancel":
+            try:
+                index = int(edit_input) - 1
+                if 0 <= index < len(greeted):
+                    new_name = input("Enter new name: ")
+                    while True:
+                        new_age_input = input("Enter new age: ")
+                        try:
+                            new_age = int(new_age_input)
+                            if new_age < 0:
+                                print("Age cannot be negative. Please try again.")
+                            else:
+                                break
+                        except ValueError:
+                            print("Invalid age. Please enter a number.")
+                    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    greeted[index] = f"{new_name}, age {new_age} (greeted at {timestamp})"
+                    print(f"Updated to: {greeted[index]}")
                 else:
                     print("Invalid number.")
             except ValueError:
